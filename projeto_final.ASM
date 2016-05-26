@@ -30,6 +30,7 @@
 		W_TEMP		;REGISTRADORES TEMPORÁRIOS PARA USO
 		STATUS_TEMP	;JUNTO ÀS INTERRUPÇÕES
 
+		ENDERECO
 		TEMPO1
 		TEMPO0
 		FLAG
@@ -49,7 +50,6 @@
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
 
-ENDERECO	EQU		B'00010000'
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                           ENTRADAS                              *
@@ -250,28 +250,30 @@ CONFIGS
 	MOVWF	SSPCON
 	BSF		SCL
 
-	; LOCK INICIAL
-	BTFSC	STATUS,NOT_TO
-	GOTO	$
-
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                     INICIALIZAÇÃO DAS VARIÁVEIS                 *
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	MOVLW	B'01000001'
 	MOVWF	BUFFER
+	MOVLW	B'00010000'
+	MOVWF	ENDERECO
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                     ROTINA PRINCIPAL                            *
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-MAIN
 
 	;CORPO DA ROTINA PRINCIPAL
+	MOVLW	.200
+	CALL	DELAY_MS
+	CALL	I2C_EEPROM_WRITE
 
 	MOVLW	.200
 	CALL	DELAY_MS
-
 	CALL	I2C_EEPROM_WRITE
 
+MAIN
+
 	GOTO	MAIN
+
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                       FIM DO PROGRAMA                           *
