@@ -10,7 +10,7 @@
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 #INCLUDE <P16F877A.INC>
 
-	__CONFIG _CP_OFF & _CPD_OFF & _DEBUG_OFF & _LVP_OFF & _WRT_OFF & _BODEN_OFF & _PWRTE_ON & _WDT_ON & _XT_OSC
+	__CONFIG _BODEN_OFF & _LVP_OFF & _PWRTE_ON & _WDT_OFF & _HS_OSC
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                    PAGINAÇÃO DE MEMÓRIA                         *
