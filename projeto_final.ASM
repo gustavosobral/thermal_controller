@@ -374,7 +374,7 @@ CONFIGS
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                     ROTINA PRINCIPAL                            *
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-MOVLW	.10
+MOVLW	.5
 SUBWF	THERESHOLD_HIGH,0
 MOVWF	THERESHOLD_LOW
 
