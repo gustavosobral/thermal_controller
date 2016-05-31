@@ -57,6 +57,7 @@
 		TO_CONVERT
 		COUNTER_HIGH
 		COUNTER_LOW
+		INT_COUNTER
 
 	ENDC			;FIM DO BLOCO DE MEMÓRIA
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -71,9 +72,10 @@
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
 
-FILTRO_TECLA			EQU	.1
+FILTRO_TECLA		EQU	.1
 CONST_COUNT_LOW		EQU	.50
 CONST_COUNT_HIGH	EQU	.5
+CONST_INT_COUNTER	EQU	.5
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                           ENTRADAS                              *
@@ -125,9 +127,8 @@ CONST_COUNT_HIGH	EQU	.5
 ; INTERRUPÇÕES
 
 	; INICIA CONVERSAO A/D
-	BSF		ADCON0,GO
-	BTFSC	ADCON0,GO
-		GOTO	$-1
+	DECFSZ	INT_COUNTER
+		GOTO	FIM_INT
 
 	BANK1
 	MOVFW	ADRESL
@@ -166,7 +167,12 @@ FET_OFF
 
 ; FIM DA INTERRUPCAO
 FIM
-	BCF	PIR1,TMR1IF
+	MOVLW	CONST_INT_COUNTER
+	MOVWF	INT_COUNTER
+	BSF		ADCON0,GO
+
+FIM_INT
+	BCF		PIR1,TMR1IF
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                 ROTINA DE SAÍDA DA INTERRUPÇÃO                  *
@@ -486,6 +492,8 @@ CONFIGS
 
 	MOVLW	.10
 	MOVWF	DIVIDER
+	MOVLW	CONST_INT_COUNTER
+	MOVWF	INT_COUNTER
 	MOVLW	CONST_COUNT_LOW
 	MOVWF	COUNTER_LOW
 	MOVLW	CONST_COUNT_HIGH
@@ -500,9 +508,10 @@ MOVLW	FILTRO_TECLA
 MOVWF	FILTRO_BOTOES
 CLRF	TMR1H
 CLRF	TMR1L
+BSF		ADCON0,GO
 
 VARRE
-	MOVLW	.1
+	MOVLW	.2
 	CALL	DELAY_S
 	
 	BTFSC	BOTAO_0
