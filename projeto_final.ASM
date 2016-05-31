@@ -71,7 +71,7 @@
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
 
-FILTRO_TECLA	EQU	.200
+FILTRO_TECLA	EQU	.1
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                           ENTRADAS                              *
