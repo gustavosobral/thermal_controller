@@ -71,7 +71,9 @@
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
 
-FILTRO_TECLA	EQU	.1
+FILTRO_TECLA			EQU	.1
+CONST_COUNT_LOW		EQU	.50
+CONST_COUNT_HIGH	EQU	.5
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;*                           ENTRADAS                              *
@@ -146,7 +148,7 @@ FET_ON
 	DECFSZ	COUNTER_HIGH ; TRATA TEMP ALTA COM FET ON
 		GOTO	FIM
 	BCF		FET
-	MOVLW	.5
+	MOVLW	CONST_COUNT_HIGH
 	MOVWF	COUNTER_HIGH
 	GOTO	FIM
 
@@ -158,7 +160,7 @@ FET_OFF
 	DECFSZ	COUNTER_LOW ; TRATA TEMP BAIXA COM FET OFF
 		GOTO	FIM
 	BSF		FET
-	MOVLW	.50
+	MOVLW	CONST_COUNT_LOW
 	MOVWF	COUNTER_LOW
 	GOTO	FIM
 
@@ -484,9 +486,9 @@ CONFIGS
 
 	MOVLW	.10
 	MOVWF	DIVIDER
-	MOVLW	.50
+	MOVLW	CONST_COUNT_LOW
 	MOVWF	COUNTER_LOW
-	MOVLW	.5
+	MOVLW	CONST_COUNT_HIGH
 	MOVWF	COUNTER_HIGH
 
 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
