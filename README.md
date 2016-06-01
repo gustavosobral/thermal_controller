@@ -1,4 +1,4 @@
-# thermal_controller
+# Thermal Controller
 
 ## Schematic
 
